@@ -30,7 +30,7 @@ resource "aws_security_group" "elasticache_sg" {
     from_port = 6379
     to_port   = 6379
     protocol  = "tcp"
-    security_groups = ["${split(",", ${var.app_sg_ids})}"]
+    security_groups = ["${split(",", var.app_sg_ids)}"]
     self      = true
   }
 
