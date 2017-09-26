@@ -3,9 +3,12 @@ variable "azs"                      {}
 variable "vpc_id"                   {}  
 variable "private_subnet_ids"       {}
 variable "project_name"             {}
-# It doesn't regconise the [${var1}, ${var2}] or $list(${var1}, ${var2})
 variable "app_sg_ids"               {
   # type = "list"
+  description = <<EOF
+                It doesn't regconise the [${var1}, ${var2}] or $list(${var1}, ${var2})
+                Please use "${var1},${$var2}"
+                EOF
 }
 variable "elasticache_params_group_name"  {
   default = "default.redis3.2"
