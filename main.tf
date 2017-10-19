@@ -2,8 +2,12 @@
 # Subnet Groups
 #--------------------
 resource "aws_elasticache_subnet_group" "elasticache_private_subnet" {
+  count       = "${var.elasticache_number_cache_clusters != 0 ? 1 : 0}"
   name        = "${var.elasticache_cluster_name}-private-subnet"
   subnet_ids  = ["${split(",", var.private_subnet_ids)}"]
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -14,6 +18,9 @@ resource "aws_elasticache_parameter_group" "elasticache_params" {
   count   = "${var.elasticache_params_group_name == "default.redis3.2" ? 0 : 1}"
   name    = "${var.elasticache_params_group_name}"
   family  = "${var.elasticache_engine_version}"
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -21,6 +28,7 @@ resource "aws_elasticache_parameter_group" "elasticache_params" {
 # Security Group
 #--------------------
 resource "aws_security_group" "elasticache_sg" {
+  count       = "${var.elasticache_number_cache_clusters != 0 ? 1 : 0}"
   name        = "${var.elasticache_cluster_name}-sg"
   description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name} ${var.env} secgroup"
 
@@ -44,6 +52,10 @@ resource "aws_security_group" "elasticache_sg" {
   tags {
     Name = "${var.elasticache_cluster_name}-sg"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -51,7 +63,8 @@ resource "aws_security_group" "elasticache_sg" {
 # Create ElastiCache Cluster
 #----------------------------
 resource "aws_elasticache_cluster" "elasticache" {
-  count       = "${var.elasticache_number_cache_clusters >= 2 ? 0 : 1}"
+  count       = "${var.elasticache_number_cache_clusters == 1 ? 1 : 0}"
+
   cluster_id  = "${var.elasticache_cluster_name}"
   engine      = "${var.elasticache_engine_name}"
   node_type   = "${var.elasticache_instance_type}"
@@ -69,6 +82,10 @@ resource "aws_elasticache_cluster" "elasticache" {
     Layer         = "${var.elasticache_engine_name}",
     Environment   = "${var.env}"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -77,6 +94,7 @@ resource "aws_elasticache_cluster" "elasticache" {
 #---------------------------
 resource "aws_elasticache_replication_group" "cerberus_redis" {
   count     = "${var.elasticache_number_cache_clusters >= 2 ? 1 : 0}"
+
   replication_group_id          = "${var.elasticache_cluster_name}"
   replication_group_description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name}"
   engine    = "${var.elasticache_engine_name}"
@@ -89,11 +107,16 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   apply_immediately     = true
   availability_zones    = "${split(",", var.azs)}"
   automatic_failover_enabled = true
+
   tags {
     Name          = "${var.elasticache_cluster_name}",
     Project       = "${var.project_name}",
     Type          = "${var.elasticache_engine_name}",
     Layer         = "${var.elasticache_engine_name}",
     Environment   = "${var.env}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }

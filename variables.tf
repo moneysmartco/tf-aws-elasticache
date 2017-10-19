@@ -25,9 +25,11 @@ variable "elasticache_engine_version"     {
 }
 variable "elasticache_number_cache_clusters" {
   description = <<EOF
-                Set this to create a replicaset. Smallest value is 2.
-                Otherwise it will create a normal cluster with single elasticache instance
-                Also nee at least m3.medium to use replicaset failover
+                Use this to specify the number of Elasticache instances.
+                - 0 will not create the resource.
+                - 1 will create a single instance of Elasticache
+                - > 2 will create a cluster with fail-over mode
+                If you set this to > 2 then you can't use cache.t2.xxx instance type.
                 EOF
   default     = 0 
 }
