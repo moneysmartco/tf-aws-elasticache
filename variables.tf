@@ -28,6 +28,7 @@ variable "elasticache_number_cache_clusters" {
                 Set this to create a replicaset. Smallest value is 2.
                 Otherwise it will create a normal cluster with single elasticache instance
                 Also nee at least m3.medium to use replicaset failover
+                Set this to 0 if you don't want to create the Elasticache
                 EOF
   default     = 0 
 }
