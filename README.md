@@ -21,7 +21,10 @@ module "redis" {
 
 Set `redis_number_cache_clusters` to
 
-- 0 if you don't want to create the Elastiache
-- 1 if you only want to create 1 Elasticache
-- 2 or more if you want to create a failover cluster (You can't use cache.t2.xxx for instance_type)
+- 0 will not create the resource.
+- 1 will create a single instance of Elasticache
+- > 2 will create a cluster with fail-over mode
+
+If you set this to > 2 then you can't use cache.t2.xxx instance type.
+
 
