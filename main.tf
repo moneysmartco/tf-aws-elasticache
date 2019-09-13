@@ -60,7 +60,7 @@ resource "aws_elasticache_cluster" "elasticache" {
   subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
-  parameter_group_name = "${local.parameter_group_name}"
+  parameter_group_name = "${var.elasticache_params_group_name}"
   apply_immediately    = true
 
   tags = "${local.aws_elasticache_instance_tags}"
@@ -89,7 +89,7 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
-  parameter_group_name       = "${local.parameter_group_name}"
+  parameter_group_name       = "${var.elasticache_params_group_name}"
   apply_immediately          = true
   automatic_failover_enabled = true
 

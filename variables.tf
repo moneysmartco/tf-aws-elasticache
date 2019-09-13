@@ -35,7 +35,7 @@ variable "elasticache_engine_version" {
 
 variable "elasticache_params_group_name" {
   description = "Exising parameters group to be used for the cluster. Using default if not specified."
-  default     = ""
+  default     = "default.redis5.0"
 }
 
 variable "tags" {
@@ -56,13 +56,6 @@ variable "tags" {
 }
 
 locals {
-  # Parameter group
-  default_parameter_group = "${ var.elasticache_number_cache_clusters == 1 ?
-    format("default.%s", var.elasticache_engine_version) :
-    format("default.%s.cluster.on", var.elasticache_engine_version)}"
-
-  parameter_group_name = "${ var.elasticache_params_group_name != "" ? var.elasticache_params_group_name : local.default_parameter_group }"
-
   # env tag in map structure
   env_tag = {
     Environment = "${var.env}"
