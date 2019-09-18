@@ -10,5 +10,5 @@ output "elasticache_replica_url" {
 }
 
 output "elasticache_url" {
-  value = "${var.elasticache_number_cache_clusters == 1 ? aws_elasticache_cluster.elasticache.cache_nodes.0.address : ""}"
+  value = "${var.elasticache_number_cache_clusters == 1 ? join( ", ", aws_elasticache_cluster.elasticache.*.cache_nodes.0.address) : ""}"
 }
