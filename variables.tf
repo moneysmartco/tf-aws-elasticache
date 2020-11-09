@@ -39,7 +39,7 @@ variable "elasticache_params_group_name" {
 }
 
 variable "at_rest_encryption_enabled" {
-  default = "false"
+  default = "true"
 }
 
 
