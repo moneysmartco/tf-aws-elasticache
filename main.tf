@@ -92,7 +92,7 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   parameter_group_name       = "${var.elasticache_params_group_name}"
   apply_immediately          = true
   automatic_failover_enabled = true
-  at_rest_encryption_enabled = "${var.at_rest_encryption_enabled}"
+  at_rest_encryption_enabled = "${var.encryption_at_rest}"
 
   tags = "${local.aws_elasticache_instance_tags}"
 
