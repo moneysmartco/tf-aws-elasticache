@@ -38,6 +38,11 @@ variable "elasticache_params_group_name" {
   default     = "default.redis5.0"
 }
 
+variable "encryption_at_rest" {
+  default = "true"
+}
+
+
 variable "tags" {
   description = "Tagging resources with default values"
 
