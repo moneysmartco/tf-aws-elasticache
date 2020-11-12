@@ -38,7 +38,7 @@ variable "elasticache_params_group_name" {
   default     = "default.redis5.0"
 }
 
-variable "at_rest_encryption_enabled" {
+variable "encryption_at_rest" {
   default = "true"
 }
 
