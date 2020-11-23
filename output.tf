@@ -13,7 +13,7 @@ output "elasticache_replica_url" {
   value = "${var.elasticache_number_cache_clusters >= 2 ? join( ", ", aws_elasticache_replication_group.cerberus_redis.*.primary_endpoint_address) : ""}"
 }
 
-output "elasticache_url" {
+#output "elasticache_url" {
   #value = "${var.elasticache_number_cache_clusters == 1 ? join( ", ", aws_elasticache_cluster.elasticache.cache_nodes.*.address) : ""}"
-  value = "${var.elasticache_number_cache_clusters == 1 ? join( ", ", aws_elasticache_cluster.elasticache.*.cache_nodes.0.address) : ""}"
-}
+#  value = "${var.elasticache_number_cache_clusters == 1 ? join( ", ", aws_elasticache_cluster.elasticache.*.cache_nodes.0.address) : ""}"
+#}
