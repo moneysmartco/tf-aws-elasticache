@@ -74,7 +74,7 @@ resource "aws_security_group" "elasticache_sg" {
 # Create Elasticache Replica
 #---------------------------
 resource "aws_elasticache_replication_group" "cerberus_redis" {
-  count = "${var.elasticache_number_cache_clusters >= 2 ? 1 : 0}"
+  #count = "${var.elasticache_number_cache_clusters >= 2 ? 1 : 0}"
 
   replication_group_id          = "${var.elasticache_cluster_name}"
   replication_group_description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name}"
