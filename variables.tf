@@ -1,6 +1,6 @@
 variable "env" {}
 variable "azs" {
-  type = "list(string)"
+  type = "list"
 }
 variable "vpc_id" {}
 variable "private_subnet_ids" {}
