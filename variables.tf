@@ -23,9 +23,7 @@ variable "cluster_replication_enabled" {
 #--------------------------------
 # ElastiCache
 #--------------------------------
-variable "elasticache_number_cache_clusters" {
-  default = 1
-}
+variable "elasticache_number_cache_clusters" {}
 
 variable "elasticache_cluster_name" {}
 
