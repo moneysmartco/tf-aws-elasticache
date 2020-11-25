@@ -1,8 +1,5 @@
 variable "env" {}
-variable "azs" {
-  type = "list"
-  default = ["ap-southeast-1a", "ap-southeast-1b"]
-}
+variable "azs" {}
 variable "vpc_id" {}
 variable "private_subnet_ids" {}
 variable "project_name" {}
