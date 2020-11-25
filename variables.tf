@@ -12,9 +12,9 @@ variable "app_sg_ids" {
                 EOF
 }
 
-#variable "single_node" {
-#  default = "true"
-#}
+variable "single_node" {
+  default = "false"
+}
 
 variable "cluster_replication_enabled" {
   default = "true"

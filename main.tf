@@ -45,31 +45,31 @@ resource "aws_security_group" "elasticache_sg" {
 # Create ElastiCache Cluster
 #----------------------------
 
-#resource "aws_elasticache_cluster" "elasticache" {
-#  count = "${var.single_node ? 1 : 0}"
+resource "aws_elasticache_cluster" "elasticache" {
+  count = "${var.single_node ? 1 : 0}"
 
   #20 characters max
-#  cluster_id      = "${replace(format("%s", var.elasticache_cluster_name), "/(.{0,20})(.*)/", "$1")}"
-#  node_type       = "${var.elasticache_instance_type}"
-#  num_cache_nodes = 1
+  cluster_id      = "${replace(format("%s", var.elasticache_cluster_name), "/(.{0,20})(.*)/", "$1")}"
+  node_type       = "${var.elasticache_instance_type}"
+  num_cache_nodes = 1
 
-#  engine         = "${var.elasticache_engine_name}"
-#  engine_version = "${var.elasticache_engine_version}"
+  engine         = "${var.elasticache_engine_name}"
+  engine_version = "${var.elasticache_engine_version}"
 
-#  port               = 6379
-#  availability_zone  = "${element(split(",", var.azs), 0)}"
-#  subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
-#  security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
+  port               = 6379
+  availability_zone  = "${element(split(",", var.azs), 0)}"
+  subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
+  security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
-#  parameter_group_name = "${var.elasticache_params_group_name}"
-#  apply_immediately    = true
+  parameter_group_name = "${var.elasticache_params_group_name}"
+  apply_immediately    = true
 
-#  tags = "${local.aws_elasticache_instance_tags}"
+  tags = "${local.aws_elasticache_instance_tags}"
 
-#  lifecycle {
-#    create_before_destroy = true
-# }
-#}
+  lifecycle {
+    create_before_destroy = true
+ }
+}
 
 #---------------------------
 # Create Elasticache Replica
@@ -86,9 +86,8 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   engine_version = "${var.elasticache_engine_version}"
 
   port               = 6379
-  availability_zones = "${var.azs}"
- #${slice(var.azs, 0, var.elasticache_number_cache_clusters)}
-  subnet_group_name  = "${join("", aws_elasticache_subnet_group.elasticache_private_subnet.*.name)}"
+  availability_zones = "${slice(["ap-southeast-1a","ap-southeast-1b"], 0, var.elasticache_number_cache_clusters)}"
+  subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
   parameter_group_name       = "${var.elasticache_params_group_name}"
