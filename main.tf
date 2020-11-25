@@ -75,7 +75,7 @@ resource "aws_security_group" "elasticache_sg" {
 # Create Elasticache Replica
 #---------------------------
 resource "aws_elasticache_replication_group" "cerberus_redis" {
-  #count = "${var.cluster_replication_enabled ? 1 : 0}"
+  count = "${var.cluster_replication_enabled ? 1 : 0}"
 
   replication_group_id          = "${var.elasticache_cluster_name}"
   replication_group_description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name}"
@@ -86,9 +86,9 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   engine_version = "${var.elasticache_engine_version}"
 
   port               = 6379
-  availability_zones = ["ap-southeast-1a","ap-southeast-1b"]
- # ${slice(var.azs, 0, var.elasticache_number_cache_clusters)}
-  subnet_group_name  = "${join ("", aws_elasticache_subnet_group.elasticache_private_subnet.*.name)}"
+  availability_zones = "${var.azs}"
+ #${slice(var.azs, 0, var.elasticache_number_cache_clusters)}
+  subnet_group_name  = "${join("", aws_elasticache_subnet_group.elasticache_private_subnet.*.name)}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
   parameter_group_name       = "${var.elasticache_params_group_name}"
