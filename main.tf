@@ -86,7 +86,7 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   engine_version = "${var.elasticache_engine_version}"
 
   port               = 6379
-  availability_zones = "${slice(["ap-southeast-1a","ap-southeast-1b"], 0, var.elasticache_number_cache_clusters)}"
+  availability_zones = "${split(",", var.azs)}"
   subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
