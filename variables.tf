@@ -1,5 +1,7 @@
 variable "env" {}
-variable "azs" {}
+variable "azs" {
+  type = "list(string)"
+}
 variable "vpc_id" {}
 variable "private_subnet_ids" {}
 variable "project_name" {}
