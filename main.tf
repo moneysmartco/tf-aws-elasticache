@@ -44,10 +44,11 @@ resource "aws_security_group" "elasticache_sg" {
 #----------------------------
 # Create ElastiCache Cluster
 #----------------------------
-#resource "aws_elasticache_cluster" "elasticache" {
-#  count = "${var.elasticache_number_cache_clusters == 1 ? 1 : 0}"
 
-  # 20 characters max
+#resource "aws_elasticache_cluster" "elasticache" {
+#  count = "${var.single_node ? 1 : 0}"
+
+  #20 characters max
 #  cluster_id      = "${replace(format("%s", var.elasticache_cluster_name), "/(.{0,20})(.*)/", "$1")}"
 #  node_type       = "${var.elasticache_instance_type}"
 #  num_cache_nodes = 1
@@ -67,14 +68,14 @@ resource "aws_security_group" "elasticache_sg" {
 
 #  lifecycle {
 #    create_before_destroy = true
- # }
+# }
 #}
 
 #---------------------------
 # Create Elasticache Replica
 #---------------------------
 resource "aws_elasticache_replication_group" "cerberus_redis" {
-  #count = "${var.elasticache_number_cache_clusters >= 2 ? 1 : 0}"
+  count = "${var.cluster_replication_enabled ? 1 : 0}"
 
   replication_group_id          = "${var.elasticache_cluster_name}"
   replication_group_description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name}"
