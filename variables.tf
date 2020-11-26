@@ -17,6 +17,7 @@ variable "single_node" {
 }
 variable "num_cache_nodes" {
   description = "Number of nodes for elasticache cluster"
+  default     = "1"
 }
 
 variable "cluster_replication_enabled" {
