@@ -51,7 +51,7 @@ resource "aws_elasticache_cluster" "elasticache" {
   #20 characters max
   cluster_id      = "${replace(format("%s", var.elasticache_cluster_name), "/(.{0,20})(.*)/", "$1")}"
   node_type       = "${var.elasticache_instance_type}"
-  num_cache_nodes = 1
+  num_cache_nodes = "${var.num_cache_nodes}"
 
   engine         = "${var.elasticache_engine_name}"
   engine_version = "${var.elasticache_engine_version}"
@@ -92,7 +92,7 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
 
   parameter_group_name       = "${var.elasticache_params_group_name}"
   apply_immediately          = true
-  automatic_failover_enabled = false
+  automatic_failover_enabled = "${var.automatic_failover_enabled}"
   at_rest_encryption_enabled = "${var.encryption_at_rest}"
 
   tags = "${local.aws_elasticache_instance_tags}"

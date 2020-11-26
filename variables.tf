@@ -13,17 +13,25 @@ variable "app_sg_ids" {
 }
 
 variable "single_node" {
-  default = "true"
+  description = "to enable simple elasticache cluster without cluster mode"
+}
+variable "num_cache_nodes" {
+  description = "Number of nodes for elasticache cluster"
 }
 
 variable "cluster_replication_enabled" {
+  description = "to enable elasticache replication group with cluster mode on"
+}
+variable "automatic_failover_enabled"{
   default = "false"
 }
 
 #--------------------------------
 # ElastiCache
 #--------------------------------
-variable "elasticache_number_cache_clusters" {}
+variable "elasticache_number_cache_clusters" {
+  description = "Number of nodes for elasticache replication cluster"
+}
 
 variable "elasticache_cluster_name" {}
 
