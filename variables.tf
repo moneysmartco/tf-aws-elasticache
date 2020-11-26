@@ -13,11 +13,11 @@ variable "app_sg_ids" {
 }
 
 variable "single_node" {
-  default = "false"
+  default = "true"
 }
 
 variable "cluster_replication_enabled" {
-  default = "true"
+  default = "false"
 }
 
 #--------------------------------
