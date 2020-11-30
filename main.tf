@@ -44,13 +44,14 @@ resource "aws_security_group" "elasticache_sg" {
 #----------------------------
 # Create ElastiCache Cluster
 #----------------------------
-resource "aws_elasticache_cluster" "elasticache" {
-  count = "${var.elasticache_number_cache_clusters == 1 ? 1 : 0}"
 
-  # 20 characters max
+resource "aws_elasticache_cluster" "elasticache" {
+  count = "${var.single_node ? 1 : 0}"
+
+  #20 characters max
   cluster_id      = "${replace(format("%s", var.elasticache_cluster_name), "/(.{0,20})(.*)/", "$1")}"
   node_type       = "${var.elasticache_instance_type}"
-  num_cache_nodes = 1
+  num_cache_nodes = "${var.num_cache_nodes}"
 
   engine         = "${var.elasticache_engine_name}"
   engine_version = "${var.elasticache_engine_version}"
@@ -67,14 +68,14 @@ resource "aws_elasticache_cluster" "elasticache" {
 
   lifecycle {
     create_before_destroy = true
-  }
+ }
 }
 
 #---------------------------
 # Create Elasticache Replica
 #---------------------------
 resource "aws_elasticache_replication_group" "cerberus_redis" {
-  count = "${var.elasticache_number_cache_clusters >= 2 ? 1 : 0}"
+  count = "${var.cluster_replication_enabled ? 1 : 0}"
 
   replication_group_id          = "${var.elasticache_cluster_name}"
   replication_group_description = "${var.elasticache_cluster_name} ${var.elasticache_engine_name}"
@@ -89,9 +90,11 @@ resource "aws_elasticache_replication_group" "cerberus_redis" {
   subnet_group_name  = "${aws_elasticache_subnet_group.elasticache_private_subnet.name}"
   security_group_ids = ["${aws_security_group.elasticache_sg.id}"]
 
+  snapshot_name      = "${var.snapshot_name}"
+
   parameter_group_name       = "${var.elasticache_params_group_name}"
   apply_immediately          = true
-  automatic_failover_enabled = true
+  automatic_failover_enabled = "${var.automatic_failover_enabled}"
   at_rest_encryption_enabled = "${var.encryption_at_rest}"
 
   tags = "${local.aws_elasticache_instance_tags}"
