@@ -27,9 +27,6 @@ variable "automatic_failover_enabled"{
   default = "false"
 }
 
-variable "snapshot_name"{
-  default = ""
-}
 
 #--------------------------------
 # ElastiCache
