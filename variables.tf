@@ -14,7 +14,7 @@ variable "project_name" {
 }
 
 variable "app_sg_ids" {
-  type = "list"
+  # type = "list"
   description = <<EOF
                 It doesn't regconise the [$${var1}, $${var2}] or $list($${var1}, $${var2})
                 Please use "$${var1},$${var2}"
