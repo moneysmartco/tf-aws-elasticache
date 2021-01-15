@@ -5,8 +5,15 @@ output "elasticache_sg_id" {
 # Condition doesn't work here for condition ? 1 : 0
 # Check later on the newer version
 
+# output "elasticache_url" {
+#   value = "${aws_elasticache_cluster.elasticache.0.cache_nodes.0.address != "" ? aws_elasticache_cluster.elasticache.0.cache_nodes.0.address : null }"
+# }
+
 output "elasticache_url" {
-  value = "${aws_elasticache_cluster.elasticache.0.cache_nodes.0.address != "" ? aws_elasticache_cluster.elasticache.0.cache_nodes.0.address : aws_elasticache_replication_group.cerberus_redis.*.primary_endpoint_address}"
+  value = join(
+    ",",
+    aws_elasticache_cluster.elasticache.0.cache_nodes.0.address,
+  )
 }
 
 #output "elasticache_url" {
