@@ -10,10 +10,7 @@ output "elasticache_sg_id" {
 # }
 
 output "elasticache_url" {
-  value = join(
-    ",",
-    aws_elasticache_cluster.elasticache.0.cache_nodes.0.address,
-  )
+  value = aws_elasticache_cluster.elasticache.0.cache_nodes.0.address
 }
 
 #output "elasticache_url" {
