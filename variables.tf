@@ -34,6 +34,7 @@ variable "num_cache_nodes" {
 }
 
 variable "cluster_replication_enabled" {
+  type = list(bool)
   description = "to enable elasticache replication group with cluster mode on"
 }
 
