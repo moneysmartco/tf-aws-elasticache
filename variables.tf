@@ -25,7 +25,7 @@ EOF
 
 variable "single_node" {
   description = "to enable simple elasticache cluster without cluster mode"
-  type = list(bool)
+  type = list(string)
 }
 
 variable "num_cache_nodes" {
