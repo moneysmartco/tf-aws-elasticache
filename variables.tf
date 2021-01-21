@@ -25,7 +25,7 @@ EOF
 
 variable "single_node" {
   description = "to enable simple elasticache cluster without cluster mode"
-  type = list(bool)
+  type = bool
 }
 
 variable "num_cache_nodes" {
@@ -34,7 +34,7 @@ variable "num_cache_nodes" {
 }
 
 variable "cluster_replication_enabled" {
-  type = list(bool)
+  type = bool
   description = "to enable elasticache replication group with cluster mode on"
 }
 
