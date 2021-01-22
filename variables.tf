@@ -28,7 +28,6 @@ variable "single_node" {
   type = list(any)
 }
 variable "cluster_replication_enabled" {
-  type = list(any)
   description = "to enable elasticache replication group with cluster mode on"
 }
 
