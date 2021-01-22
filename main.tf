@@ -46,7 +46,7 @@ resource "aws_security_group" "elasticache_sg" {
 #----------------------------
 
 resource "aws_elasticache_cluster" "elasticache" {
-  count = var.single_node == "true" ? 1 : 0
+  count = var.single_node ? 1 : 0
 
   #20 characters max
   cluster_id = replace(

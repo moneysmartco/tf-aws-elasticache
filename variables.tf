@@ -25,7 +25,6 @@ EOF
 
 variable "single_node" {
   description = "to enable simple elasticache cluster without cluster mode"
-  type = list(any)
 }
 variable "cluster_replication_enabled" {
   description = "to enable elasticache replication group with cluster mode on"
