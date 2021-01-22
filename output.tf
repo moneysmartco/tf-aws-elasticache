@@ -6,7 +6,9 @@ output "elasticache_sg_id" {
 # Check later on the newer version
 
 output "elasticache_url" {
-  value = var.single_node == "true" ? aws_elasticache_cluster.elasticache.*.cache_nodes.0.address :["random"]
+  # value = var.single_node == "true" ? aws_elasticache_cluster.elasticache.*.cache_nodes.0.address :["random"]
+  value = var.single_node == "true" ? ["random2"] :["random"]
+
 }
 
 # output "elasticache_url" {
