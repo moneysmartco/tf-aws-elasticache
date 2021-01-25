@@ -1,32 +1,45 @@
-variable "env" {}
-variable "azs" {}
-variable "vpc_id" {}
-variable "private_subnet_ids" {}
-variable "project_name" {}
+variable "env" {
+}
+
+variable "azs" {
+}
+
+variable "vpc_id" {
+}
+
+variable "private_subnet_ids" {
+}
+
+variable "project_name" {
+}
 
 variable "app_sg_ids" {
   # type = "list"
   description = <<EOF
-                It doesn't regconise the [${var1}, ${var2}] or $list(${var1}, ${var2})
-                Please use "${var1},${$var2}"
-                EOF
+                It doesn't regconise the [$${var1}, $${var2}] or $list($${var1}, $${var2})
+                Please use "$${var1},$${var2}"
+                
+EOF
+
 }
 
 variable "single_node" {
   description = "to enable simple elasticache cluster without cluster mode"
 }
+variable "cluster_replication_enabled" {
+  description = "to enable elasticache replication group with cluster mode on"
+}
+
 variable "num_cache_nodes" {
   description = "Number of nodes for elasticache cluster"
   default     = "1"
 }
 
-variable "cluster_replication_enabled" {
-  description = "to enable elasticache replication group with cluster mode on"
-}
-variable "automatic_failover_enabled"{
+
+
+variable "automatic_failover_enabled" {
   default = "false"
 }
-
 
 #--------------------------------
 # ElastiCache
@@ -35,7 +48,8 @@ variable "elasticache_number_cache_clusters" {
   description = "Number of nodes for elasticache replication cluster"
 }
 
-variable "elasticache_cluster_name" {}
+variable "elasticache_cluster_name" {
+}
 
 variable "elasticache_instance_type" {
   default = "cache.t2.micro"
@@ -58,7 +72,6 @@ variable "encryption_at_rest" {
   default = "true"
 }
 
-
 variable "tags" {
   description = "Tagging resources with default values"
 
@@ -79,12 +92,12 @@ variable "tags" {
 locals {
   # env tag in map structure
   env_tag = {
-    Environment = "${var.env}"
+    Environment = var.env
   }
 
   # elasticache instance name tag in map structure
   elasticache_instance_name_tag = {
-    Name = "${var.elasticache_cluster_name}"
+    Name = var.elasticache_cluster_name
   }
 
   # elasticache security group name tag in map structure
@@ -96,6 +109,11 @@ locals {
   # variables that will be mapped to the various resource block
   #------------------------------------------------------------
 
-  aws_elasticache_instance_tags = "${merge(var.tags, local.env_tag, local.elasticache_instance_name_tag)}"
-  aws_security_group_tags       = "${merge(var.tags, local.env_tag, local.elasticache_security_group_name_tag)}"
+  aws_elasticache_instance_tags = merge(var.tags, local.env_tag, local.elasticache_instance_name_tag)
+  aws_security_group_tags = merge(
+    var.tags,
+    local.env_tag,
+    local.elasticache_security_group_name_tag,
+  )
 }
+
