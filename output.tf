@@ -4,7 +4,7 @@ output "elasticache_sg_id" {
 
 
 output "elasticache_url" {
-  value = var.single_node == true ? aws_elasticache_cluster.elasticache.*.cache_nodes.0.address : []
+  value = var.single_node == true ? aws_elasticache_cluster.elasticache.*.cache_nodes.0.address : [""]
 
 }
 
