@@ -41,6 +41,10 @@ variable "automatic_failover_enabled" {
   default = "false"
 }
 
+variable "multi_az_enabled" {
+  default = "false"
+}
+
 #--------------------------------
 # ElastiCache
 #--------------------------------
