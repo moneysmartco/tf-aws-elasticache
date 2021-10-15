@@ -9,6 +9,12 @@ output "elasticache_url" {
 }
 
 
+output "elasticache_url" {
+  value = var.single_node == true ? aws_elasticache_replication_group.cerberus_redis.*.cache_nodes.0.address : [""]
+
+}
+
+
 output "elasticache_replica_url" {
   value = join(
     ",",
