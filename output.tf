@@ -6,7 +6,7 @@ output "elasticache_sg_id" {
 
 
 output "elasticache_url" {
-  value = aws_elasticache_replication_group.cerberus_redis.*.cache_nodes.0.address
+  value = aws_elasticache_replication_group.cerberus_redis.cache_nodes[0].address
 }
 
 
