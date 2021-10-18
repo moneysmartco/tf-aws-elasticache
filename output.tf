@@ -3,10 +3,9 @@ output "elasticache_sg_id" {
 }
 
 
-
-
 output "elasticache_url" {
-  value = aws_elasticache_replication_group.cerberus_redis.cache_nodes[0].address
+  value = var.single_node == true ? aws_elasticache_cluster.elasticache.*.cache_nodes.0.address : [""]
+
 }
 
 
@@ -16,5 +15,3 @@ output "elasticache_replica_url" {
     aws_elasticache_replication_group.cerberus_redis.*.primary_endpoint_address,
   )
 }
-
-
