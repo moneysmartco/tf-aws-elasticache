@@ -67,6 +67,7 @@ resource "aws_elasticache_cluster" "elasticache" {
 
   parameter_group_name = var.elasticache_params_group_name
   apply_immediately    = true
+  deletion_protection_enabled = var.deletion_protection
 
   tags = local.aws_elasticache_instance_tags
 
