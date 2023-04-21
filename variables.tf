@@ -72,7 +72,7 @@ variable "elasticache_params_group_name" {
   default     = "default.redis5.0"
 }
 
-variable "deletion_protection" {
+variable "deletion_protection_enabled" {
   default = true
 }
 
